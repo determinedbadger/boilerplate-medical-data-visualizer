@@ -4,10 +4,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import data
-df = None
+df = pd.read_csv('medical_examination.csv')
 
-# Add 'overweight' column
-df['overweight'] = None
+# ------ Add 'overweight' column ------
+df['height(m)'] = df['height'] / 100    # Convert height to meters
+df['BMI'] = df['weight'] / (df['height(m)'] ** 2)    # Calculate BMI
+lambda x: 1 if x > 25 else 0    # Overweight if BMI > 25
+df['overweight'] = df['BMI'].apply(lambda x: 1 if x > 25 else 0)
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
 
